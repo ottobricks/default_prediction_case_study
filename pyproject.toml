@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "klarna_case_study"
+version = "0.1.0"
+description = "Solution for the case study"
+authors = ["Otto von Sperling <otto@vonsperling.com.br>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pandas = "^1.2.4"
+pandas-profiling = {extras = ["notebook"], version = "^3.0.0"}
+xgboost = "^1.4.2"
+scikit-learn = "^0.24.2"
+
+[tool.poetry.dev-dependencies]
+black = "^21.5b1"
+jupytext = "^1.11.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
