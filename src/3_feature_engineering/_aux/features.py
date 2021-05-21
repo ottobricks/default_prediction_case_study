@@ -17,32 +17,7 @@ def _get_worst_status_agg(df: pd.DataFrame) -> pd.DataFrame:
         .values.reshape(-1, 1)
     )
 
-
-def is_account_worst_status_0_12m_normal(df: pd.DataFrame) -> np.ndarray:
-    return (df["account_worst_status_0_12m"] == 1).astype(int).values.reshape(-1, 1)
-
-
-def is_last_arch_worst_status_possible(df: pd.DataFrame) -> np.ndarray:
-    return (
-        (df["status_last_archived_0_24m"] == df["status_last_archived_0_24m"].max())
-        .astype(int)
-        .values.reshape(-1, 1)
-    )
-
-
-def num_active_div_by_paid_inv_0_12m_is_above_1(df: pd.DataFrame) -> np.ndarray:
-    return (
-        (df["num_active_div_by_paid_inv_0_12m"] > 1).astype(int).values.reshape(-1, 1)
-    )
-
-
-def num_arch_dc_0_12m_binned(df: pd.DataFrame) -> np.ndarray:
-    return pd.cut(
-        df["num_arch_dc_0_12m"], [-1, 1, 5, np.inf], labels=False
-    ).values.reshape(-1, 1)
-
-
-def is_merchant_category_blacklisted(df: pd.DataFrame) -> np.ndarray:
+def _is_merchant_category_blacklisted(df: pd.DataFrame) -> np.ndarray:
     return (
         (
             df["merchant_category"].isin(
@@ -55,11 +30,10 @@ def is_merchant_category_blacklisted(df: pd.DataFrame) -> np.ndarray:
             )
         )
         .astype(int)
-        .values.reshape(-1, 1)
     )
 
 
-class AccountWorstStatusTransformer(BaseEstimator, TransformerMixin):
+class ExtraColumnCreator(BaseEstimator, TransformerMixin):
     def __init__(self):
         pass
 
@@ -67,4 +41,11 @@ class AccountWorstStatusTransformer(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, df: pd.DataFrame):
-        return df.assign(account_worst_status_0_12m=_get_worst_status_agg(df))
+        return df.assign(
+            account_worst_status_0_12m=_get_worst_status_agg(df),
+            num_arch_dc_0_12m_binned=pd.cut(df["num_arch_dc_0_12m"], [-1, 1, 5, np.inf], labels=False),
+            is_merchant_category_blacklisted=_is_merchant_category_blacklisted(df),
+            is_last_arch_worst_status_possible=(df["status_last_archived_0_24m"] == df["status_last_archived_0_24m"].max()).astype(int),
+            is_account_worst_status_0_12m_normal=lambda frame: (frame["account_worst_status_0_12m"] == 1).astype(int),
+            num_active_div_by_paid_inv_0_12m_is_above_1=(df["num_active_div_by_paid_inv_0_12m"] > 1).astype(int)
+        )
