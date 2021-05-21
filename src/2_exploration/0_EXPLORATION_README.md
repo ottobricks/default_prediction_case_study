@@ -11,8 +11,8 @@ The first 2 RQs come from variables that have no missing (or zero) values, the p
 The remaining 4 RQs come each from one of the variable groups we define during our sanity check:
 3. Can knowing the status of previous orders distinguish the probability of default?
 4. Is there a relationship between active (paid and still-paying) invoices and the probability of default?
-5. blu
-6. ble
+5. Does what we know about customers' previous purchases help distinguish "default" and "not_default" observations?
+6. Can the kind of merchant that is sought after provide any clues about one's likelyhood to default?
 
 For reference, the variable groups are:
 
