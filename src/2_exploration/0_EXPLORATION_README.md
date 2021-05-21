@@ -2,17 +2,18 @@
 
 Let's take advantage of the variable groups we created during sanity to guide our exploration.
 Due to time constraints for the case study, we won't explore all variables in depth.
-Rather, we will propose 6 research questions (RQ) to guide our exploration. 
+Rather, we will propose 7 research questions (RQ) to guide our exploration. 
 
 The first 2 RQs come from variables that have no missing (or zero) values, the personal variables.
 1. Are customers who default more likely to be younger?
 2. Is there a relationship between how people choose their email and the probability of default?
 
 The remaining 4 RQs come each from one of the variable groups we define during our sanity check:
-3. bla
+3. Can knowing the status of previous orders distinguish the probability of default?
 4. bly
 5. blu
 6. ble
+7. bli
 
 For reference, the variable groups are:
 
