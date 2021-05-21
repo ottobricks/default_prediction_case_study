@@ -10,10 +10,9 @@ The first 2 RQs come from variables that have no missing (or zero) values, the p
 
 The remaining 4 RQs come each from one of the variable groups we define during our sanity check:
 3. Can knowing the status of previous orders distinguish the probability of default?
-4. bly
+4. Is there a relationship between active (paid and still-paying) invoices and the probability of default?
 5. blu
 6. ble
-7. bli
 
 For reference, the variable groups are:
 
