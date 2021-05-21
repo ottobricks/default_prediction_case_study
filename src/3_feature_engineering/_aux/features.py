@@ -20,3 +20,9 @@ def is_account_worst_status_0_12m_normal(df: pd.DataFrame) -> np.ndarray:
 
 def num_active_div_by_paid_inv_0_12m_is_above_1(df: pd.DataFrame) -> np.ndarray:
     return (df["num_active_div_by_paid_inv_0_12m"] > 1).astype(int).values.reshape(-1, 1)
+
+def num_arch_dc_0_12m_binned(df: pd.DataFrame) -> np.ndarray:
+    return pd.cut(df["num_arch_dc_0_12m"], [-1, 1, 5, np.inf], labels=False).values.reshape(-1, 1)
+
+def is_merchant_category_blacklisted(df: pd.DataFrame) -> np.ndarray:
+    return (df["merchant_category"].isin(["Tobacco","Sex toys","Plants & Flowers","Dating services",])).astype(int).values.reshape(-1, 1)
