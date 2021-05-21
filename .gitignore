@@ -7,3 +7,4 @@ ml_assets/
 __pycache__/
 
 src/2_exploration/*.py
+src/3_feature_engineering/*.py
