@@ -1,7 +1,10 @@
 data/
 *.csv
 
+ml_assets/
+
 .vscode/
 __pycache__/
 
 src/2_exploration/*.py
+src/3_feature_engineering/*.py
