@@ -43,23 +43,21 @@ They seem to be ordinal (hence the max in some of them), with 1.0 being the norm
 - sum_capital_paid_account_M_Nm: the total amount of money paid with account funds between M and N months ago
 - account_incoming_debt_vs_paid_0_24m: ratio "new_debt / old_paid_debt"
 - num_unpaid_bills: number of installments still unpaid
-
-**4. Payment variables**
-- avg_payment_span_M_Nm: the average number of days to liquidate debt looking back between M and N months ago
-- has_paid: whether the account has paid the latest installment
-- max_paid_inv_M_Nm: the amount of the largest purchase the account has made between M and N months ago
 - sum_paid_inv_0_12m: the total amount of money paid with installments (card) between M and N months ago
-
-**5. Count variables**
+- max_paid_inv_M_Nm: the amount of the largest purchase the account has made between M and N months ago
 - num_active_inv: number of active invoices
 - num_active_div_by_paid_inv_M_Nm: ratio "number_active_invoices / number_paid_invoices" between M and N months ago
     - null when number_paid_invoices is zero
     - can be imputed, what's the best way?
+- avg_payment_span_M_Nm: the average number of days to liquidate debt looking back between M and N months ago
+- has_paid: whether the account has paid the latest installment
+
+**4. Archived variables**
 - num_arch_dc_M_Nm: number of archieved invoices with status "dc" between M and N months ago (?)
 - num_arch_ok_M_Nm: number of archieved invoices with status "ok" between M and N months ago
 - num_arch_rem_M_Nm: number of archieved invoices with status "rem" between M and N months ago (?)
 - num_arch_written_off_M_Nm: number of archieved invoices that were unpaid between M and N months ago
 
-**6. Order variables**
+**5. Order variables**
 - merchant_category: category of the merchant receiving the order
 - merchant_group: group of the merchant receiving the order
