@@ -52,3 +52,7 @@ def test_k_prop(c_r_table: pd.DataFrame, alpha: float = 0.05, theta_null=None):
         print("Maintain null hypothesis with {} < {}".format(chi_test, chi_critical))
 
     return chi_test, df_test
+
+
+def complement(s: pd.Series):
+    return (s.shape[0] - s.sum())
