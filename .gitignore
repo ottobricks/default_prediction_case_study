@@ -1,7 +1,7 @@
 data/
 *.csv
 
-ml_assets/
+ml_artifacts/
 
 .vscode/
 __pycache__/
