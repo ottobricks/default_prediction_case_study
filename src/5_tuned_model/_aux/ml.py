@@ -2,7 +2,7 @@ from typing import Dict, List, Any
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
 
 class EstimatorSelector:
@@ -78,11 +78,14 @@ class EstimatorSelector:
         self,
         X: np.ndarray,
         y: np.ndarray,
-        cv=5,
-        n_jobs=None,
-        verbose=1,
+        cv: int=5,
+        n_jobs: int=None,
+        verbose: int=1,
         scoring=None,
-        refit=False,
+        refit: bool=False,
+        imbalanced_data: bool=False,
+        random_state: int=None,
+        shuffle_folds: bool=False
     ) -> None:
         """
 
@@ -110,6 +113,9 @@ class EstimatorSelector:
             Refit an estimator using the best found parameters on the whole dataset.
 
         """
+        if imbalanced_data:
+            cv = StratifiedKFold(n_splits=cv, random_state=random_state, shuffle=shuffle_folds)
+
         for key in self.keys:
             print("Running GridSearchCV for {}.".format(key))
             model = self.models[key]
