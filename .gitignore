@@ -1,10 +1,14 @@
 data/
 *.csv
 
-ml_assets/
+ml_artifacts/
 
 .vscode/
 __pycache__/
 
+src/0_split_data/*.py
+src/1_sanity/*.py
 src/2_exploration/*.py
 src/3_feature_engineering/*.py
+src/4_baseline_model/*.py
+src/5_tuned_model/*.py

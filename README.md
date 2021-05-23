@@ -24,7 +24,7 @@ To bridge this experiment with a clear business goal, we can take advantage of t
 2. Exploration
 3. Feature Engineering
 4. Baseline Model
-5. Hyperparameter Tunning
+5. Tuned Model
 6. Results and Evaluation
 
 Each part of the experiment will have it's own dedicated folder for the sake of clarity.
