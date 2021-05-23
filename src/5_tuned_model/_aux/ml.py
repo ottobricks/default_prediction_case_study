@@ -101,21 +101,23 @@ class EstimatorSelector:
         y : array
             The target values (class labels in classification).
 
-        cv : int , default=5
-            Determines the cross-validation splitting strategy.
+        cv : int, cv_splitter, iterable, default=5
+            Cross-validation splitting strategy. See [GridSearch][1] for more information
 
         n_jobs : int , default=None
-            The number of CPUs to use to do the computation.
+            The number of CPU cores to use for computation.
 
         verbose : int , default=1
             Controls the verbosity when fitting and predicting.
 
-        scoring : None
-            Apply estimator’s score method for evaluating.
+        scoring : str, callable, list, tuple or dict, default=None
+            Strategy to evaluate the performance of the cross-validated model on the test set.
 
         refit : bool , default=False
             Refit an estimator using the best found parameters on the whole dataset.
 
+
+        [1]: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV
         """
         if imbalanced_data:
             cv = StratifiedKFold(n_splits=cv, random_state=random_state, shuffle=shuffle_folds)
@@ -160,7 +162,6 @@ class EstimatorSelector:
 
         for k in self.grid_searches:
 
-            print(k)
             params = self.grid_searches[k].cv_results_["params"]
             scores = []
 
