@@ -1,0 +1,2 @@
+poetry==1.1.6
+poetry-core==1.0.3
