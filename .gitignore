@@ -2,6 +2,7 @@ data/
 *.csv
 
 ml_artifacts/
+.ipynb_checkpoints/
 
 .vscode/
 __pycache__/
