@@ -5,7 +5,7 @@
 ## **Otto von Sperling** | 18th to 25th of May, 2021
 
 ## 1. Problem definition
-By and large, we are asked to predict the probability that a given user will default their next payment.
+By and large, the case study asks that we predict the probability that a given user will default their next payment.
 Altough it would have been nice to work with customers' time series data, we are provided with pre-computed variables that describe such series.
 
 The first of Klarna's leadership principles is "customer obsession", which leads us
@@ -38,29 +38,76 @@ In the end, we fit a model that respects our 1st KPI and only blocks 3% of users
 All in all, we believe this is a fun project with some schallenges with regards to data quality that enables one to come up with creative solutions. Not all steps are perfect but major experiment decisions were given a good amount of thought, considering the 1 week span of this exercise. We (I, myself and my coffee mug) will be happy to discuss both technical and philosophical details of our methods and implementation.
 
 ## 5. Deployment
-In order to make our best model available, we will use two strategies of deployment, the second one being a fall-back option.
-The first way we make our model available is through Amazon SageMaker endpoints. Requests should be sent to the following IP/port/route:
+We will make our model available through a Flask app on AWS EC2. Amazon SageMaker endpoints was the first option but I have to admit I am a bit rusty with it. It started to take too much time to make the container work with all the sagemaker requirements, so I decided to go trhough a route that I am more used to at the moment. However, I will be digging back into SageMaker endpoints over the weekend.
+
+Nevertheless, the endpoint is available at:
 
 > 192.168.0.1:80/api/v1/default-risk/predict
 
 The expected payload is a json containing at least the following items:
 ```python
 {
-    "age": int,
-    "status_last_archived_0_24m": float or int,
-    "account_worst_status_0_3m": float or int,
-    "account_worst_status_3_6m": float or int,
-    "account_worst_status_6_12m": float or int,
-    "merchant_category": str,
-    "num_arch_dc_0_12m": int,
-    "num_active_div_by_paid_inv_0_12m": int
+    "headers": {
+        "Authorization": "klarna-case-study"
+    },
+    "data": """'[{"uuid":"1229c83c-6338-4c4b-a20f-065ecca45b4a",
+                  "account_amount_added_12_24m":28472,
+                  "account_days_in_dc_12_24m":0.0,
+                  "account_days_in_rem_12_24m":0.0,
+                  "account_days_in_term_12_24m":0.0,
+                  "account_incoming_debt_vs_paid_0_24m":0.0,
+                  "account_status":1.0,
+                  "account_worst_status_0_3m":1.0,
+                  "account_worst_status_12_24m":1.0,
+                  "account_worst_status_3_6m":1.0,
+                  "account_worst_status_6_12m":1.0,
+                  "age":29,
+                  "avg_payment_span_0_12m":8.24,
+                  "avg_payment_span_0_3m":7.8333333333,
+                  "merchant_category":"Diversified electronics",
+                  "merchant_group":"Electronics",
+                  "has_paid":true,
+                  "max_paid_inv_0_12m":37770.0,
+                  "max_paid_inv_0_24m":37770.0,
+                  "name_in_email":"F1+L",
+                  "num_active_div_by_paid_inv_0_12m":0.037037037,
+                  "num_active_inv":1,
+                  "num_arch_dc_0_12m":0,
+                  "num_arch_dc_12_24m":0,
+                  "num_arch_ok_0_12m":25,
+                  "num_arch_ok_12_24m":16,
+                  "num_arch_rem_0_12m":0,
+                  "num_arch_written_off_0_12m":0.0,
+                  "num_arch_written_off_12_24m":0.0,
+                  "num_unpaid_bills":1,
+                  "status_last_archived_0_24m":1,
+                  "status_2nd_last_archived_0_24m":1,
+                  "status_3rd_last_archived_0_24m":1,
+                  "status_max_archived_0_6_months":1,
+                  "status_max_archived_0_12_months":1,
+                  "status_max_archived_0_24_months":1,
+                  "recovery_debt":0,
+                  "sum_capital_paid_account_0_12m":116,
+                  "sum_capital_paid_account_12_24m":27874,
+                  "sum_paid_inv_0_12m":265347,
+                  "time_hours":14.1708333333,
+                  "worst_status_active_inv":1.0}]'"""
 }
 ```
-The fall-back strategy of deployment will be a Flask API runnig on an EC2 instance on AWS. The expected payload is the same as above and requests should be sent to:
+It's quite easy to generate the expected data format with Pandas. All it takes is:
+```python
+import pandas as pd
 
-> 192.168.0.1:80/api/v1/default-risk/predict
+pd.read_csv("dataset.csv").to_json(orient="records")
+```
 
-## Running the project
+The route is capable of handling multiple requests at once or one at a time.
+The output is a string in the same json format as the input, and can be easily transformed into back into a DataFrame:
+```python
+pd.read_json(response.content, orient="records")
+```
+
+## 6. Running the Experiment
 
 It's quite simple to run the project. First you must navigate to the top-level of the project and install the package manager Poetry:
 ```bash
