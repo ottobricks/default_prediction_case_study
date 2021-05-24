@@ -3,6 +3,8 @@ FROM python:3.8.8
 ENV POETRY_VIRTUALENVS_CREATE=0
 ENV POETRY_VERSION=1.1.5
 
+RUN apt-get python3.8-dev
+
 RUN python -m pip install poetry==${POETRY_VERSION}
 
 WORKDIR /code
