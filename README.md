@@ -109,6 +109,8 @@ pd.read_json(response.content, orient="records")
 
 ## 6. Running the Experiment
 
+> Before anything else, you must create a `data/` directory on the top-level dir and add the `dataset.csv` file for it all to work.
+
 It's quite simple to run the project. First you must navigate to the top-level directory and build the Docker image:
 ```bash
 docker build -t klarna-case-study -f ./Dockerfile .
@@ -116,9 +118,8 @@ docker build -t klarna-case-study -f ./Dockerfile .
 
 Then, run it interactively with bash:
 ```bash
-docker run -it klarna-case-study:latest bash
+docker run klarna-case-study:latest
 ```
-> The case study `dataset.csv` file must be added to the newly created folder `data/`.
 
 After that, all you need to do is run the project:
 ```bash
