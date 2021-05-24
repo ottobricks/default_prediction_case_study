@@ -55,4 +55,4 @@ def test_k_prop(c_r_table: pd.DataFrame, alpha: float = 0.05, theta_null=None):
 
 
 def complement(s: pd.Series):
-    return (s.shape[0] - s.sum())
+    return s.shape[0] - s.sum()

@@ -12,6 +12,7 @@ def _get_worst_status_agg(df: pd.DataFrame) -> pd.DataFrame:
                 "account_worst_status_6_12m",
             ]
         ]
+        .fillna(1)
         .max(axis=1)
         .combine_first(df.assign(dummy=1).dummy)
         .values.reshape(-1, 1)
@@ -42,17 +43,17 @@ class ExtraColumnCreator(BaseEstimator, TransformerMixin):
         return df.assign(
             account_worst_status_0_12m=_get_worst_status_agg(df),
             num_arch_dc_0_12m_binned=pd.cut(
-                df["num_arch_dc_0_12m"], [-1, 1, 5, np.inf], labels=False
+                df["num_arch_dc_0_12m"].fillna(0), [-1, 1, 5, np.inf], labels=False
             ),
             is_merchant_category_blacklisted=_is_merchant_category_blacklisted(df),
             is_last_arch_worst_status_possible=(
-                df["status_last_archived_0_24m"]
-                == df["status_last_archived_0_24m"].max()
+                df["status_last_archived_0_24m"].fillna(1)
+                == df["status_last_archived_0_24m"].fillna(1).max()
             ).astype(int),
             is_account_worst_status_0_12m_normal=lambda frame: (
-                frame["account_worst_status_0_12m"] == 1
+                frame["account_worst_status_0_12m"].fillna(1) == 1
             ).astype(int),
             num_active_div_by_paid_inv_0_12m_is_above_1=(
-                df["num_active_div_by_paid_inv_0_12m"] > 1
+                df["num_active_div_by_paid_inv_0_12m"].fillna(0) > 1
             ).astype(int),
         )
