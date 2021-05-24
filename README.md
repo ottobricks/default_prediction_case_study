@@ -125,3 +125,16 @@ After that, all you need to do is run the project:
 ```bash
 python build_and_run_project_tree.py
 ```
+
+Otherwise, if you want to run the notebooks without fussing around with docker, you can take the following steps.
+First you must navigate to the top-level of the project and install the package manager Poetry:
+```bash
+python -m pip install poetry
+```
+
+Then, let poetry do the heavy lifting (it may take a little while):
+```bash
+python -m poetry install
+```
+
+And that's it. You may now spin jupyter and explore the notebooks for yourslef.
