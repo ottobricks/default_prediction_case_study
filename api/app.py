@@ -24,43 +24,34 @@ def get_health_ready():
     return Response(status=200)
 
 
-@app.route('/api/v1/default_risk/predict_one', methods=["POST"])
-def predict_one():
-    try:
-        request_json = request.get_json()
-    except AttributeError:
-        return jsonify({"type": "json_missing_from_request"}), 400
+@app.route('/api/v1/default_risk/predict', methods=["POST"])
+def predict():
     
     try:
-        data = request_json["data"]
+        header = request.headers["Authorization"]
+        if header != "klarna-case-study":
+            raise KeyError
     except KeyError:
-        return jsonify({"type": "data_missing_from_json"}), 400
+        return jsonify({"type": "unauthorized_access"}), 401
 
-    df = pd.read_json(data, orient="records")
+    data = request.get_json()
+    if data is None:
+        return jsonify({"type": "json_missing_from_request", "received": json.dumps(data)}), 400
 
-    prediction = pipeline.predict(df)
-    
-    return jsonify(
-        {
-            "uuid": df["uuid"],
-            "pd": prediction,
-            "is_default": prediction > DEFAULT_RISK_THRESHOLD
-        }
-    ), 200
-
-
-@app.route('/api/v1/default_risk/predict_many', methods=["POST"])
-def predict_many():
     try:
-        data = request.get_json()
-    except AttributeError:
-        return jsonify({"type": "json_missing_from_request"}), 400
+        df = pd.read_json(data, orient="records")
+    except ValueError:
+        return jsonify({"type": "data_incorrect_format", "expected": F.expected_payload()}), 400
 
-    df = pd.read_json(data, orient="records")
+    try:
+        df = df[F.required_columns()]
+    except KeyError:
+        missing = [col for col in F.required_columns() if col not in df.columns]
+        return jsonify({"type": "required_columns_missing_from_data", "missing_columns": json.dumps(missing)}), 400
 
     prediction = df[["uuid"]].assign(
         pd=pipeline.predict_proba(df)[:, 1],
-        is_default=lambda df: (df["pd"] > DEFAULT_RISK_THRESHOLD).astype(int)
+        flag_default=lambda df: (df["pd"] > DEFAULT_RISK_THRESHOLD).astype(int)
     )
 
     payload = prediction.to_json(orient="records")
