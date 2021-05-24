@@ -1,6 +1,13 @@
 import os
 import subprocess
 
+print("Building project tree...")
+subprocess.run("mkdir -p ./data/train/preprocessed".split())
+subprocess.run("mkdir -p ./data/test".split())
+subprocess.run("mkdir -p ./data/predict".split())
+subprocess.run("mkdir -p ./ml_artifacts/gridsearch_results".split())
+print("\n\tDone building!\n")
+
 print("Preparing to run experiment steps...")
 subprocess.run("poetry run jupytext --to py:percent src/0_split_data/split_train_validation_test.ipynb".split())
 subprocess.run("poetry run jupytext --to py:percent src/3_feature_engineering/1_define_preprocessors.ipynb".split())
@@ -26,8 +33,8 @@ print("Running script to fit baseline and score validation...")
 subprocess.run("poetry run python ./1_train_and_score.py".split(), cwd=f"{os.getcwd()}/src/4_baseline_model/")
 print("\n\tDone with baseline script!\n")
 
-print("Running script to fit handle imbalanced_data...")
-subprocess.run("poetry run python ./1_handle_imbalanced.py".split(), cwd=f"{os.getcwd()}/src/5_tuned_model/")
+print("Running script to handle imbalanced_data...")
+subprocess.run("poetry run python ./1_handle_imbalance.py".split(), cwd=f"{os.getcwd()}/src/5_tuned_model/")
 print("\n\tDone with imbalance script!\n")
 
 print("Running script to select models...")
