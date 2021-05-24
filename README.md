@@ -109,22 +109,18 @@ pd.read_json(response.content, orient="records")
 
 ## 6. Running the Experiment
 
-It's quite simple to run the project. First you must navigate to the top-level of the project and install the package manager Poetry:
+It's quite simple to run the project. First you must navigate to the top-level directory and build the Docker image:
 ```bash
-python -m pip install poetry
+docker build -t klarna-case-study -f ./Dockerfile .
 ```
 
-Then, let poetry do the heavy lifting (it may take a little while):
+Then, run it interactively with bash:
 ```bash
-python -m poetry install
+docker run -it klarna-case-study:latest bash
 ```
+> The case study `dataset.csv` file must be added to the newly created folder `data/`.
 
-After that, you must build the project tree:
+After that, all you need to do is run the project:
 ```bash
-poetry run python 0_build_project_tree.py
-```
-
-The case study `dataset.csv` file must be added to the newly created folder `data/`. The last step is to run:
-```bash
-poetry run python 1_run_project.py
+python build_and_run_project_tree.py
 ```
