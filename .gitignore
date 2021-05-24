@@ -13,3 +13,4 @@ src/2_exploration/*.py
 src/3_feature_engineering/*.py
 src/4_baseline_model/*.py
 src/5_tuned_model/*.py
+src/6_results/*.py
