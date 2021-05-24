@@ -7,9 +7,8 @@ from _aux import features as F
 DEFAULT_RISK_THRESHOLD = .8
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
 
-pipeline = joblib.load("ml_artifacts/pipeline.joblib.gz")
+pipeline = joblib.load("_aux/pipeline.joblib.gz")
 
 
 @app.route('/')
