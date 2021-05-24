@@ -59,3 +59,25 @@ The expected payload is a json containing at least the following items:
 The fall-back strategy of deployment will be a Flask API runnig on an EC2 instance on AWS. The expected payload is the same as above and requests should be sent to:
 
 > 192.168.0.1:80/api/v1/default-risk/predict
+
+## Running the project
+
+It's quite simple to run the project. First you must navigate to the top-level of the project and install the package manager Poetry:
+```bash
+python -m pip install poetry
+```
+
+Then, let poetry do the heavy lifting (it may take a little while):
+```bash
+python -m poetry install
+```
+
+After that, you must build the project tree:
+```bash
+poetry run python 0_build_project_tree.py
+```
+
+The case study `dataset.csv` file must be added to the newly created folder `data/`. The last step is to run:
+```bash
+poetry run python 1_run_project.py
+```
