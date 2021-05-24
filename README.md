@@ -38,11 +38,11 @@ In the end, we fit a model that respects our 1st KPI and only blocks 3% of users
 All in all, we believe this is a fun project with some schallenges with regards to data quality that enables one to come up with creative solutions. Not all steps are perfect but major experiment decisions were given a good amount of thought, considering the 1 week span of this exercise. We (I, myself and my coffee mug) will be happy to discuss both technical and philosophical details of our methods and implementation.
 
 ## 5. Deployment
-We will make our model available through a Flask app on AWS EC2. Amazon SageMaker endpoints was the first option but I have to admit I am a bit rusty with it. It started to take too much time to make the container work with all the sagemaker requirements, so I decided to go trhough a route that I am more used to at the moment. However, I will be digging back into SageMaker endpoints over the weekend.
+We will make our model available through AWS Lambda. Amazon SageMaker endpoints was the first option but I have to admit I am a bit rusty with it. It started to take too much time to make the container work with all the sagemaker requirements, so I decided to go trhough a route that I am more used to at the moment. However, I will be digging back into SageMaker endpoints over the weekend.
 
 Nevertheless, the endpoint is available at:
 
-> 192.168.0.1:80/api/v1/default-risk/predict
+> https://cumnecdgaa.execute-api.eu-west-2.amazonaws.com/dev/api/v1/default_risk/predict
 
 The expected payload is a json containing at least the following items:
 ```python
