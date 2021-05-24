@@ -9,7 +9,7 @@ DEFAULT_RISK_THRESHOLD = .8
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-pipeline = joblib.load("ml_artifacts/preprocessor.joblib.gz")
+pipeline = joblib.load("ml_artifacts/pipeline.joblib.gz")
 
 
 @app.route('/')
@@ -52,26 +52,20 @@ def predict_one():
 @app.route('/api/v1/default_risk/predict_many', methods=["POST"])
 def predict_many():
     try:
-        request_json = request.get_json()
+        data = request.get_json()
     except AttributeError:
         return jsonify({"type": "json_missing_from_request"}), 400
-    
-    try:
-        data = request_json["data"]
-    except KeyError:
-        return jsonify({"type": "data_missing_from_json"}), 400
 
     df = pd.read_json(data, orient="records")
 
-    prediction = pipeline.predict(df)
+    prediction = df[["uuid"]].assign(
+        pd=pipeline.predict_proba(df)[:, 1],
+        is_default=lambda df: (df["pd"] > DEFAULT_RISK_THRESHOLD).astype(int)
+    )
+
+    payload = prediction.to_json(orient="records")
     
-    return jsonify(
-        {
-            "uuid": df["uuid"],
-            "pd": prediction,
-            "is_default": prediction > DEFAULT_RISK_THRESHOLD
-        }
-    ), 200
+    return payload, 200
 
 
 if __name__ == "__main__":
