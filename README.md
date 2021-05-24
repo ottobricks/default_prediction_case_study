@@ -13,7 +13,6 @@ to the conclusion that a smooth experience for the customer is king. Thus, we mu
 is not bothered by waves of notifications or even calls from our agents.
 
 ## 2. Metrics for our business goal
-**TALK ABOUT thresholds for the predictions, how to set and tune them.**
 In order to guarantee a smooth experience for our customers, we score and evaluate our models via threshold analysis. That is, the model outputs predictions for the likelyhood of customers defaulting and we follow up with an ad-hoc selection of thresholds to decide whether to flag observations. Such thresholds will be selected based on two key performance indicators:
 
 1. Flag as "in risk of default" no more than 5% of customers incorrectly.
