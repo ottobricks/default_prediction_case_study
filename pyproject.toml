@@ -12,6 +12,7 @@ xgboost = "^1.4.2"
 scikit-learn = "^0.24.2"
 divergence = "0.4.1"
 plotly = "^4.14.3"
+Flask = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b1"
