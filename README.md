@@ -34,7 +34,7 @@ Throughtout our experiment, we show that testing hypothsesis and thinking about 
 
 In the end, we fit a model that respects our 1st KPI and only blocks 2.3% of users incorrectly but is able to identify nearly 30% of defaults correctly (at predicted_risk > 0.85). Whilst this result are far from great, we believe it achieves the goal of having a reasonable enough model. Of course, much more effort can go towards hyperparameter tunning to squeeze any potential gains and choosing different models, but we believe exploration to be more relevant in the context of a case study, thus more time was spent on it.
 
-All in all, we believe this is a fun project with some schallenges with regards to data quality that enables one to come up with creative solutions. Not all steps are perfect but major experiment decisions were given a good amount of thought, considering the 1 week span of this exercise. We (I, myself and my coffee mug) will be happy to discuss both technical and philosophical details of our methods and implementation.
+All in all, we believe this is a fun project with some challenges with regards to data quality that enables one to come up with creative solutions. Not all steps are perfect but major experiment decisions were given a good amount of thought, considering the 1 week span of this exercise. We (I, myself and my coffee mug) will be happy to discuss both technical and philosophical details of our methods and implementation.
 
 ## 5. Deployment
 We will make our model available through AWS Lambda. Amazon SageMaker endpoints was the first option but I have to admit I am a bit rusty with it. It started to take too much time to make the container work with all the sagemaker requirements, so I decided to go trhough a route that I am more used to at the moment. However, I will be digging back into SageMaker endpoints over the weekend.
@@ -115,17 +115,12 @@ It's quite simple to run the project. First you must navigate to the top-level d
 docker build -t klarna-case-study -f ./Dockerfile .
 ```
 
-Then, run it interactively with bash:
+Then, run it with:
 ```bash
 docker run klarna-case-study:latest
 ```
 
-After that, all you need to do is run the project:
-```bash
-python build_and_run_project_tree.py
-```
-
-Otherwise, if you want to run the notebooks without fussing around with docker, you can take the following steps.
+This will generate all asstes within the container. They can either be copied or the jupyter server can be expose. Otherwise, if you want to run the notebooks without fussing around with docker, you can take the following steps.
 First you must navigate to the top-level of the project and install the package manager Poetry:
 ```bash
 python -m pip install poetry
