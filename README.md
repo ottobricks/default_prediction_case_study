@@ -41,7 +41,7 @@ We will make our model available through AWS Lambda. Amazon SageMaker endpoints 
 
 Nevertheless, the endpoint is available at:
 
-> https://cumnecdgaa.execute-api.eu-west-2.amazonaws.com/dev/api/v1/default_risk/predict
+> https://s1rgig9qnh.execute-api.eu-west-2.amazonaws.com/dev/api/v1/default_risk/predict
 
 The expected payload is a json containing at least the following items:
 ```python
