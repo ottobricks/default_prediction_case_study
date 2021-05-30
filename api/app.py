@@ -32,7 +32,7 @@ def predict():
 
     try:
         header = request.headers["Authorization"]
-        if header != "klarna-case-study":
+        if header != "otto-case-study":
             raise KeyError
     except KeyError:
         return jsonify({"type": "unauthorized_access"}), 401
