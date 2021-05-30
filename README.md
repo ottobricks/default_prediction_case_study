@@ -1,16 +1,10 @@
 
-[![Klarna logo](assets/logo.png)](https://https://www.klarna.com/us/)
-
-# Klarna Case Study | Data Science
-## **Otto von Sperling** | 18th to 25th of May, 2021
+# Case Study | Default Prediction
 
 ## 1. Problem definition
 By and large, the case study asks that we predict the probability that a given user will default their next payment.
 Altough it would have been nice to work with customers' time series data, we are provided with pre-computed variables that describe such series.
 
-The first of Klarna's leadership principles is "customer obsession", which leads us
-to the conclusion that a smooth experience for the customer is king. Thus, we must keep incorrect warnings to a minimum so that the customer
-is not bothered by waves of notifications or even calls from our agents.
 
 ## 2. Metrics for our business goal
 In order to guarantee a smooth experience for our customers, we score and evaluate our models via threshold analysis. That is, the model outputs predictions for the likelyhood of customers defaulting and we follow up with an ad-hoc selection of thresholds to decide whether to flag observations. Such thresholds will be selected based on two key performance indicators:
@@ -32,14 +26,12 @@ Each part of the experiment will have it's own dedicated folder for the sake of 
 ## 4. Results
 Throughtout our experiment, we show that testing hypothsesis and thinking about your data are fundamental steps so as to have any chance at success in a prediction task. This was most sucessfully highlighted during our custom undersample strategy to handle class imbalance in our target label that took our baseline performance to a much better level.
 
-In the end, we fit a model that respects our 1st KPI and only blocks 2.3% of users incorrectly but is able to identify nearly 30% of defaults correctly (at predicted_risk > 0.85). Whilst this result are far from great, we believe it achieves the goal of having a reasonable enough model. Of course, much more effort can go towards hyperparameter tunning to squeeze any potential gains and choosing different models, but we believe exploration to be more relevant in the context of a case study, thus more time was spent on it.
+In the end, we fit a model that respects our 1st KPI and only blocks 2.3% of users incorrectly but is able to identify nearly 30% of defaults correctly (at predicted_risk > 0.85). Whilst this result are far from great, we believe it achieves the goal of having a reasonable enough model built over (a long) weekend. Of course, much more effort can go towards hyperparameter tunning to squeeze any potential gains and choosing different models, but we believe exploration to be more relevant in the context of a case study, thus more time was spent on it.
 
-All in all, we believe this is a fun project with some challenges with regards to data quality that enables one to come up with creative solutions. Not all steps are perfect but major experiment decisions were given a good amount of thought, considering the 1 week span of this exercise. We (I, myself and my coffee mug) will be happy to discuss both technical and philosophical details of our methods and implementation.
+All in all, we believe this is a fun project with some challenges with regards to data quality that enables one to come up with creative solutions. Not all steps are perfect but major experiment decisions were given a good amount of thought, considering the short time span of this exercise. We (I, myself and my coffee mug) would be happy to discuss both technical and philosophical details of our methods and implementation.
 
 ## 5. Deployment
-We will make our model available through AWS Lambda. Amazon SageMaker endpoints was the first option but I have to admit I am a bit rusty with it. It started to take too much time to make the container work with all the sagemaker requirements, so I decided to go trhough a route that I am more used to at the moment. However, I will be digging back into SageMaker endpoints over the weekend.
-
-Nevertheless, the endpoint is available at:
+We will make our model available through AWS Lambda, which is available at:
 
 > https://s1rgig9qnh.execute-api.eu-west-2.amazonaws.com/dev/api/v1/default_risk/predict
 
@@ -47,7 +39,7 @@ The expected payload is a json containing at least the following items:
 ```python
 {
     "headers": {
-        "Authorization": "klarna-case-study"
+        "Authorization": "otto-case-study"
     },
     "data": """'[{"uuid":"1229c83c-6338-4c4b-a20f-065ecca45b4a",
                   "account_amount_added_12_24m":28472,
@@ -131,4 +123,7 @@ Then, let poetry do the heavy lifting (it may take a little while):
 python -m poetry install
 ```
 
-And that's it. You may now spin jupyter and explore the notebooks for yourslef.
+And that's it. You may now spin jupyter and explore the notebooks for yourslef:
+```bash
+poetry run jupyter notebook ./
+```
