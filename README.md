@@ -104,12 +104,12 @@ pd.read_json(response.content, orient="records")
 
 It's quite simple to run the project. First you must navigate to the top-level directory and build the Docker image:
 ```bash
-docker build -t klarna-case-study -f ./Dockerfile .
+docker build -t default-case-study -f ./Dockerfile .
 ```
 
 Then, run it with:
 ```bash
-docker run klarna-case-study:latest
+docker run default-case-study:latest
 ```
 
 This will generate all asstes within the container. They can either be copied or the jupyter server can be expose. Otherwise, if you want to run the notebooks without fussing around with docker, you can take the following steps.
