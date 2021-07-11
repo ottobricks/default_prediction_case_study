@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "klarna_case_study"
+name = "default_case_study"
 version = "0.1.0"
 description = "Solution for the case study"
 authors = ["Otto von Sperling <otto@vonsperling.com.br>"]
